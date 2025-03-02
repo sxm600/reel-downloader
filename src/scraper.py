@@ -8,7 +8,6 @@ class Scraper:
     def __init__(self):
         self.context = None
 
-
     async def start(self, headless: bool = True) -> Self:
         playwright = await async_playwright().start()
         browser = await playwright.chromium.launch(headless=headless)
@@ -23,7 +22,6 @@ class Scraper:
         await asyncio.sleep(3)  # 3 just works to store cookies to context idk
 
         return self
-
 
     async def reel_source_url(self, url: str) -> str:
         page = await self.context.new_page()
