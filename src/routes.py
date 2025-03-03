@@ -12,16 +12,16 @@ router = Router()
 async def reel(message: Message, scraper: Scraper):
     source = await scraper.reel_source_url(message.text)
     logging.info(f"@{message.from_user.username} - {source}")
-    await message.answer_video(source)
+    await message.reply_video(source)
 
 
 @router.error(F.update.message.as_("message"))
 async def error(event: ErrorEvent, message: Message):
     logging.critical(event.exception, exc_info=True)
-    await message.answer("Oops, something went wrong!")
+    await message.reply("Oops, something went wrong! Check if provided link is correct.")
 
 
 @router.message(F.text)
 async def default(message: Message):
     logging.info(f"@{message.from_user.username} - {message.text}")
-    await message.answer("Only instagram reel links allowed")
+    await message.reply("Only instagram reel links allowed.")
