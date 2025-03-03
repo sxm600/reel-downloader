@@ -2,11 +2,12 @@ import asyncio
 
 from typing import Self
 from playwright.async_api import async_playwright
+from playwright.async_api import BrowserContext
 
 
 class Scraper:
     def __init__(self):
-        self.context = None
+        self.context: BrowserContext = None
 
     async def start(self, headless: bool = True) -> Self:
         playwright = await async_playwright().start()
@@ -25,6 +26,7 @@ class Scraper:
 
     async def reel_source_url(self, url: str) -> str:
         page = await self.context.new_page()
+        page.set_default_timeout(5000)
         url = url.replace("/reels/", "/reel/")
 
         try:
